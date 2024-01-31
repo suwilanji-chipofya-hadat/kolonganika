@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
@@ -36,3 +37,8 @@ class Scraper:
                     else:
                         url_data[property_.name] = property_.text
                 self.data.append(url_data)
+
+def filter_urls(urls):
+    regex_pattern = r'^https:\/\/[^\/]+\/(?:\d{4}\/\d{2}\/\d{2}|news)\/[a-z0-9-]+\/$'
+    filtered_urls = [url for url in urls if re.match(regex_pattern, url["loc"])]
+    return filtered_urls
